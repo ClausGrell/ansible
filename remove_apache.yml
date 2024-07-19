@@ -12,3 +12,4 @@
     apt:
       name: apache2
       state: absent
+    when: ansible_distribution in ["Debian", "Ubuntu"]
