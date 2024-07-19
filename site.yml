@@ -1,0 +1,59 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Install updates (Debian)
+    apt:
+      upgrade: yes
+      update_cache: yes
+    when: ansible_distribution == "Debian"
+
+  - name: Install updates (Ubuntu)
+    apt:
+      upgrade: yes
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+
+- hosts: frontend
+  become: true
+  tasks:
+
+  - name: Install apache2 package on Ubuntu
+    apt:
+      name:
+        - apache2
+      state: latest
+      update_cache: yes
+    when: ansible_distribution in ["Ubuntu"]
+
+  - name: Install apache2 package on Debian
+    apt:
+      name:
+        - apache2
+      state: latest
+      update_cache: yes
+    when: ansible_distribution in ["Debian"]
+
+- hosts: backend
+  become: true
+  tasks:
+
+  - name: Install MySql on Ubuntu
+    apt:
+      name:
+        - mysql-server
+      state: latest
+      update_cache: yes
+    when: ansible_distribution in ["Ubuntu"]
+
+  - name: Install MySql on Debian
+    package:
+      name:
+        - mysql-server
+      state: latest
+      update_cache: yes
+    when: ansible_distribution in ["Debian"]
+
