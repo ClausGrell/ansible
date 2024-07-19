@@ -3,3 +3,6 @@
 
 [frontend]
 clag@192.168.0.137
+
+[workstations]
+192.168.0.242
