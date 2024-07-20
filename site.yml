@@ -54,8 +54,20 @@
       update_cache: yes
     when: ansible_distribution in ["Debian"]
 
+  - name: Start apache2 (Debian)
+    service:
+      name: apache2
+      enabled: yes  
+      state: started
+    register: apache2_status
+    when: ansible_distribution in ["Debian"]
+
+  - name: apache2 status
+    debug:
+      msg: "Apache service is {{ 'started' if apache2_status == 'started' else 'stopped' }}"
+
   - name: Copy file
-    copy: 
+    copy:
       src: default_site.html
       dest: /var/www/html/index.html
       owner: root
